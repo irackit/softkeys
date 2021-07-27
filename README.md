@@ -34,3 +34,4 @@ os-type ::= (operating-system | all) [version]
 operating-system ::= "operating system name" 
 all ::= "scan with all could" 
 version ::= "service patch, version number"
+
