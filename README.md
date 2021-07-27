@@ -3,7 +3,8 @@ vuln scanner, web spider, web scanner, auto exploiter, fuzzer, dll injector, she
 -----------------------------------------------------------------------------------------------------------------------------------
 
 
-/* vuln-scan */
+   vuln-scan 
+-----------------
 
 vuln-scan -d type select-db user [password] -h scheme ([ip | url]) -p ([port | port-range | port [,]]) -o os-type  
 
