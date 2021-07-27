@@ -5,32 +5,35 @@ vuln scanner, web spider, web scanner, auto exploiter, fuzzer, dll injector, she
 
 /* vuln-scan */
 
-vuln-scan -d type select-db user [password] -h ([ip | url]) -p ([port | port-range | port [,]]) -o os-type
+vuln-scan -d type select-db user [password] -h ([ip | url]) -p ([port | port-range | port [,]]) -o os-type  
 
-vuln-scan ::= '-' switch [options]
+vuln-scan ::= '-' switch [options] 
 
 switch ::= 'd','h','p','o'
 
-d ::= database h ::= host p ::= port o ::= os-type
+d ::= database \
+h ::= host \
+p ::= port \
+o ::= os-type 
 
-database ::= type select-db user [password] 
-type ::= ([MySQL | postgresal]) 
-select-db ::= "database to select" 
-user ::= "username" 
+database ::= type select-db user [password] \
+type ::= ([MySQL | postgresal]) \
+select-db ::= "database to select" \
+user ::= "username" \
 password ::= "sql password"
 
-host ::= scheme (ip | url) 
-scheme ::= ( http | https )
-ip ::= "ipv4 address" 
-url ::= "address name"
+host ::= scheme (ip | url) \
+scheme ::= ( http | https )\
+ip ::= "ipv4 address" \
+url ::= "address name"  
 
-port ::= (dport | dport-range | dport-comma) 
-dport ::= port-number 
-dport-range ::= port-number:port-number 
-dport-comma ::= *(port-number ',') 
-port-number ::= *('1' '2' '3' '4' '5' '6' '7' '8' '9' '0')
+port ::= (dport | dport-range | dport-comma) \
+dport ::= port-number \
+dport-range ::= port-number:port-number \
+dport-comma ::= *(port-number ',') \
+port-number ::= *('1' '2' '3' '4' '5' '6' '7' '8' '9' '0') 
 
-os-type ::= (operating-system | all) [version] 
-operating-system ::= "operating system name" 
-all ::= "scan with all could" 
-version ::= "service patch, version number"
+os-type ::= (operating-system | all) [version] \
+operating-system ::= "operating system name" \
+all ::= "scan with all could" \
+version ::= "service patch, version number" 
