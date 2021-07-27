@@ -3,7 +3,7 @@ vuln scanner, web spider, web scanner, auto exploiter, fuzzer, dll injector, she
 -----------------------------------------------------------------------------------------------------------------------------------
 
 
-/* vuln-scan options*/
+/* vuln-scan */
 
 vuln-scan -d type select-db user [password] -h ([ip | url]) -p ([port | port-range | port [,]]) -o os-type
 
@@ -34,4 +34,3 @@ os-type ::= (operating-system | all) [version]
 operating-system ::= "operating system name" 
 all ::= "scan with all could" 
 version ::= "service patch, version number"
-
