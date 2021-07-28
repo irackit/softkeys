@@ -1,8 +1,11 @@
 //softkeys - ackit www.returnonerror.com
+//#include <Python.h>
 #include <iostream>
 #include <string.h>
 #include <vector>
 #include <string>
+#include <filesystem>
+#include "include/optarg.h"
 
 using namespace std; 
 
@@ -10,64 +13,74 @@ using namespace std;
 #define MAX_LEN 100
 #define DELIM " \n"
 
-int main(int argc, char** argv){
+int main(int argc,char** argv){
 
-/* command line fun stuff */
-   std::string cmd = "";
-   char command[MAX_LEN];
-   char* token;
+    /* load module filenames */
+    std::vector<std::string> modules;
+    std::vector<std::string>::iterator ackit_beg;
+    std::string path = "modules/";
+    for(const auto& entry : std::filesystem::directory_iterator(path)){
+        std::string path = entry.path().string();
+        modules.push_back(path);
+    }
 
-/* load modules commands set in stone */
-   std::vector<std::string> command_options;
+    const std::string options = "l:s:d:h";
+    ackit::softkeys_optarg *argu = new ackit::softkeys_optarg(argc,argv,options);
 
-    command_options.push_back("vuln-scan");
-    command_options.push_back("web-spider");
-    command_options.push_back("vuln-web");
-    command_options.push_back("auto-exploit");
-    command_options.push_back("fuzzer");
-    command_options.push_back("dll-injector");
-    command_options.push_back("shellcode");
-    command_options.push_back("backdoors");
-    command_options.push_back("rootkits");
-    command_options.push_back("debug");
-    command_options.push_back("help");
+    char command[MAX_LEN];
+    char* token;
+    std::string cmd;
+    int flag=0;
 
-   std::vector<std::string>::iterator ackit_beg;
+    while(1){
 
-/* our fun little command line */
-
-   while(1){
        cout<<cmd<<">";
        cin.getline(command,MAX_LEN);
        if(strlen(command) < 2) continue;
        token = strtok(command,DELIM);
 
        if(!strncmp(token,"load",MAX_LEN)){
+          flag = 0;
           token = strtok(NULL,DELIM);
-          if(!token)continue;
-          for( ackit_beg = command_options.begin(); ackit_beg != command_options.end(); ackit_beg++){
+          if(!token){
+              std::cout<<"syntax error"<<std::endl;
+              continue;
+          }
+          for( ackit_beg = modules.begin(); ackit_beg != modules.end(); ackit_beg++){
               if(!strncmp(token,(*ackit_beg).c_str(),MAX_LEN)){
-                  /******* TODO need to create module loading here *******/
+                  flag = 1;
                   std::cout<<"loading: "<<(*ackit_beg).c_str()<<std::endl;
+                  std::string load = "python modules/" + *ackit_beg + ".py";
                   cmd = *ackit_beg;
+
+                  /*
+                    TODO: Load an run python script here
+                 */
               }
           }
+          if(flag == 0){
+              std::cout<<"syntax error"<<std::endl;
+          }
+              
        }
 
-       /* list modules that can be loaded with load command */
-       if(!strncmp(token,"help",MAX_LEN)){
+       if(!strncmp(token,"list",MAX_LEN)){
            std::cout<<"\nmodule list:"<<std::endl;
            std::cout<<"----------------"<<std::endl;
-           for( ackit_beg = command_options.begin(); ackit_beg != command_options.end(); ackit_beg++){
+           for( ackit_beg = modules.begin(); ackit_beg != modules.end(); ackit_beg++){
                   std::cout<<(*ackit_beg).c_str()<<std::endl;
            }
            std::cout<<"\n";
         }
         
-       /* exit the program */
+       if(!strncmp(token,"help",MAX_LEN)){
+           std::cout<<"softkeys [load | list | exit]"<<std::endl;
+       }
+
        if(!strncmp(token,"exit",MAX_LEN)){
            break;
        }
 
     }
+
 }
