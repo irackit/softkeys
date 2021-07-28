@@ -94,4 +94,3 @@ int main(int argc,char** argv){
     delete argu;
 }
 
-//C:/Users/ackit/AppData/Local/Programs/Python/Python39
