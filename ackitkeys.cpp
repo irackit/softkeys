@@ -4,9 +4,9 @@
 #include <string.h>
 #include <vector>
 #include <string>
-#include <filesystem>
 #include "include/optarg.h"
 #include "include/load_modules.h"
+#include "include/python_loader.h"
 
 using namespace std; 
 
@@ -18,6 +18,7 @@ int main(int argc,char** argv){
 
     /* load module filenames */
     ackit::load_modules *modules = new ackit::load_modules();
+    //std::vector<std::string> module_list = modules->get_modules();
 
     const std::string options = "l:s:d:h";
     ackit::softkeys_optarg *argu = new ackit::softkeys_optarg(argc,argv,options);
@@ -48,11 +49,11 @@ int main(int argc,char** argv){
                 if(ret == ""){
                     break;
                 }
-                std::cout<<"token: "<<token<<" ret: "<<ret<<std::endl;
+                //std::cout<<"token: "<<token<<" ret: "<<ret<<std::endl;
                 if(!strncmp(token,ret.c_str(),MAX_LEN)){
                   flag = 1;
-                  std::cout<<"loading: "<<ret<<std::endl;
-                  std::string load = "python modules/" + ret + ".py";
+                  ackit::python_loader* python = new ackit::python_loader(ret);
+                  delete python;
                   cmd = ret;
                   break;
               }
@@ -92,3 +93,5 @@ int main(int argc,char** argv){
     delete modules;
     delete argu;
 }
+
+//C:/Users/ackit/AppData/Local/Programs/Python/Python39
