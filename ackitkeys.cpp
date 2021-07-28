@@ -6,6 +6,7 @@
 #include <string>
 #include <filesystem>
 #include "include/optarg.h"
+#include "include/load_modules.h"
 
 using namespace std; 
 
@@ -16,13 +17,7 @@ using namespace std;
 int main(int argc,char** argv){
 
     /* load module filenames */
-    std::vector<std::string> modules;
-    std::vector<std::string>::iterator ackit_beg;
-    std::string path = "modules/";
-    for(const auto& entry : std::filesystem::directory_iterator(path)){
-        std::string path = entry.path().string();
-        modules.push_back(path);
-    }
+    ackit::load_modules *modules = new ackit::load_modules();
 
     const std::string options = "l:s:d:h";
     ackit::softkeys_optarg *argu = new ackit::softkeys_optarg(argc,argv,options);
@@ -46,30 +41,42 @@ int main(int argc,char** argv){
               std::cout<<"syntax error"<<std::endl;
               continue;
           }
-          for( ackit_beg = modules.begin(); ackit_beg != modules.end(); ackit_beg++){
-              if(!strncmp(token,(*ackit_beg).c_str(),MAX_LEN)){
-                  flag = 1;
-                  std::cout<<"loading: "<<(*ackit_beg).c_str()<<std::endl;
-                  std::string load = "python modules/" + *ackit_beg + ".py";
-                  cmd = *ackit_beg;
 
-                  /*
-                    TODO: Load an run python script here
-                 */
+          modules->reset();
+          while(1){
+                std::string ret = modules->get_item();
+                if(ret == ""){
+                    break;
+                }
+                std::cout<<"token: "<<token<<" ret: "<<ret<<std::endl;
+                if(!strncmp(token,ret.c_str(),MAX_LEN)){
+                  flag = 1;
+                  std::cout<<"loading: "<<ret<<std::endl;
+                  std::string load = "python modules/" + ret + ".py";
+                  cmd = ret;
+                  break;
               }
-          }
+           }
+ 
           if(flag == 0){
-              std::cout<<"syntax error"<<std::endl;
+              std::cout<<"syntax error #003"<<std::endl;
           }
-              
        }
 
        if(!strncmp(token,"list",MAX_LEN)){
            std::cout<<"\nmodule list:"<<std::endl;
            std::cout<<"----------------"<<std::endl;
-           for( ackit_beg = modules.begin(); ackit_beg != modules.end(); ackit_beg++){
-                  std::cout<<(*ackit_beg).c_str()<<std::endl;
+           std::string ret;
+           modules->reset();
+
+           while(1){
+                std::string ret = modules->get_item();
+                if(strlen(ret.c_str()) < 1){
+                    break;
+                }
+                std::cout<<ret<<std::endl;
            }
+
            std::cout<<"\n";
         }
         
