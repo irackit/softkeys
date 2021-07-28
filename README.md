@@ -12,6 +12,7 @@ vuln scanner, web spider, web scanner, auto exploiter, fuzzer, dll injector, she
 	softkeys.exe ([load | list | help | exit])
 		load MODULE Load a module
 		list List currently loaded modules
+		set *(KEY=VALUE) Set vars for currently loaded module
 		help ([load | list | help | exit])
 		exit exit the program
 </pre>
