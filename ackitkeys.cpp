@@ -18,8 +18,6 @@ int main(int argc,char** argv){
 
     /* load module filenames */
     ackit::load_modules *modules = new ackit::load_modules();
-    //std::vector<std::string> module_list = modules->get_modules();
-
     const std::string options = "l:s:d:h";
     ackit::softkeys_optarg *argu = new ackit::softkeys_optarg(argc,argv,options);
 
@@ -49,7 +47,6 @@ int main(int argc,char** argv){
                 if(ret == ""){
                     break;
                 }
-                //std::cout<<"token: "<<token<<" ret: "<<ret<<std::endl;
                 if(!strncmp(token,ret.c_str(),MAX_LEN)){
                   flag = 1;
                   ackit::python_loader* python = new ackit::python_loader(ret);
