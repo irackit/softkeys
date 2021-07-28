@@ -1,5 +1,4 @@
 //softkeys - ackit www.returnonerror.com
-//#include <Python.h>
 #include <iostream>
 #include <string.h>
 #include <vector>
