@@ -6,5 +6,5 @@ def test(message):
 def main():
   test("running phisher.py")
   
-if __name__ = '__main__':
+if __name__ == '__main__':
   main()
