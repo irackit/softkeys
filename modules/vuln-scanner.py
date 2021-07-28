@@ -6,5 +6,5 @@ def test(message):
 def main():
   test("running vuln-scan.py")
   
-if __name__ = '__main__':
+if __name__ == '__main__':
   main()
