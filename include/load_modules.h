@@ -1,25 +1,22 @@
-// ackit - returnonerro.com
-#include "include/load_modules.h"
+// ackit - returnonerror.com
+#ifndef ACKIT_LMODULES
+#define ACKIT_LMODULES
 
-ackit::load_modules::load_modules(){
+#include <filesystem>
+#include <vector>
+#include <string>
 
-    for(const auto& entry : std::filesystem::directory_iterator(PATH)){
-        std::string path = entry.path().string();
-        this->modules.push_back(path);
-    }
+#define PATH "modules/"
 
-    this->it = this->modules.begin();
-
+namespace ackit{
+    class load_modules{
+        private:
+            std::vector<std::string> modules;
+            std::vector<std::string>::iterator it;
+        public:
+            load_modules();
+            std::string get_item(void);
+            void reset(void);
+    };
 }
-    
-void ackit::load_modules::reset(void){
-    this->it = this->modules.begin();
-}
-
-std::string ackit::load_modules::get_item( void ){
-
-    if( this->it != (this->modules).end()){
-        return *((this->it)++);
-    }
-    return "";
-}
+#endif /* ACKIT_LMODULES */
